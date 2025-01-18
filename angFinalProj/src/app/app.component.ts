@@ -1,13 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  template: `
+    <h1>Welcome to the Task Management App!</h1>
+    <router-outlet></router-outlet> <!-- Use router-outlet for routing -->
+  `,
 })
-export class AppComponent {
-  title = 'angFinalProj';
-}
+export class AppComponent {}
