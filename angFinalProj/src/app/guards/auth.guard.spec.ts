@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthGuard } from './auth.guard';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 // Mock router for testing
 class MockRouter {

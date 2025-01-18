@@ -7,37 +7,21 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'https://your-api-endpoint.com'; // Replace with your actual API URL
+  private mockUser = { email: 'test@example.com', password: 'password123', role: 'user' };
+
+  private apiUrl = 'https://your-api-endpoint.com';
 
   constructor(private http: HttpClient) {}
 
   login(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, credentials).pipe(
-      map((response) => {
-        // Assuming the response contains a success message and a role
-        if (response.success) {
-          return { success: true, message: 'Login successful', role: response.role };
-        } else {
-          return { success: false, message: response.message || 'Login failed' };
-        }
-      }),
-      catchError((error) => {
-        // Handle error and return a failure message
-        console.error('Login error:', error);
-        return of({ success: false, message: 'An error occurred during login' });
-      })
-    );
+    if (credentials.email === this.mockUser.email && credentials.password === this.mockUser.password) {
+      return of({ success: true, message: 'Login successful', role: this.mockUser.role });
+    } else {
+      return of({ success: false, message: 'Invalid credentials' });
+    }
   }
 
   register(user: { email: string; password: string; role: string }): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, user).pipe(
-      map((response) => {
-        return { success: response.success, message: response.message };
-      }),
-      catchError((error) => {
-        console.error('Registration error:', error);
-        return of({ success: false, message: 'An error occurred during registration' });
-      })
-    );
+    return of({ success: true, message: 'Registration successful' });
   }
 }

@@ -1,9 +1,13 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {
@@ -16,16 +20,16 @@ export class LoginComponent {
     this.authService.login(this.credentials).subscribe({
       next: (result) => {
         if (result.success) {
-          // Navigate based on the role
+          // If the login is successful, navigate to the appropriate page based on the role
           const targetRoute = result.role === 'admin' ? '/admin' : '/user';
-          this.router.navigate([targetRoute]);
+          this.router.navigate([targetRoute]); // Redirect user to respective page
         } else {
-          // If login is unsuccessful, show the error message
+          // Show error message if login fails
           this.errorMessage = result.message;
         }
       },
       error: (err) => {
-        // Handle error in case of a failed HTTP request
+        // Handle error during login attempt
         if (err.status === 0) {
           this.errorMessage = 'Network error. Please try again later.';
         } else {
